@@ -1,10 +1,16 @@
 ﻿function Get-SDESecret {
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory=$false)]
-        [string]$SDEWebService,
         [Parameter(Mandatory=$true)]
-        [string]$Name
+        [string]$Name,
+        [Parameter(Mandatory=$false)]
+        [string]$APIServerAddress,
+        [Parameter(Mandatory=$false)]
+        [int]$APIServerPort,
+        [Parameter(Mandatory=$false)]
+        [bool]$DoNotUseSSL,
+        [Parameter(Mandatory=$false)]
+        [bool]$TrustAllCertificates
     )
     if ([Environment]::UserInteractive) {
         $certStore = 'CurrentUser'

@@ -9,13 +9,15 @@ All client technologies share one common workflow:
     - if no certificate is configured, build a list of certificates (correct EKU + private key access) that will be tried.
 2. Look up the API:
     - if a hostname and port have been configured (.sdeconfig file in %userprofile% --> user registry --> machine registry --> user policy --> machine policy --> explicit parameter value) test connectivity to that hostname:port.
-    - if no hostname has been configured, try to resolve the SRV record for _sdeapi.tcp.(domain) and test connectivity if resolution was successfull.
-    - if SRV record cannot be resolved, try to resolve sdeapi.(domain) and test connectivity on port 443, followed by a test on port 80, if 443 does not succeed.
+    - if no hostname has been configured, try to resolve the SRV record for _secretdelivery.tcp.(domain) and test connectivity if resolution was successfull.
+    - if SRV record cannot be resolved, try to resolve CNAME secretdelivery.(domain) and test connectivity on port 443, followed by a test on port 80, if 443 does not succeed.
+    - if CNAME record cannot be resolved, try to resolve A secretdelivery.(domain) and test connectivity on port 443, followed by a test on port 80, if 443 does not succeed.
 3. Build the list of API call URIs and run a GET against them:      
 https://{hostname from previous step}/api/{cert-thumbprint}/{secret-name}
 4. If one blob has been returned, decrypt it.
 5. If more than one blob is returned, decrypt them and return the credential with the latest update timestamp.
 
+Both the config file and registry import files for User and Machine can be built using the Make-SDEClientConfig.ps1 script in the config folder of this repo.
 
 ## Client technologies
 Following client technologies are available or in development:
